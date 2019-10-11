@@ -8,8 +8,7 @@
                                                     ############################## 
 
 
-                                                # 최우선 수정 사항 : 없음!
-                                                # 추가 사항 : 온라인 스코어보드(가능할까)
+
 
 
                                                     ## Code Starts From Here ##
@@ -390,23 +389,14 @@ def note4clicked() :
     del note4list[0]
 
 def set() :
-    noteimagemanage()
     notelistmanage()
     gamebackground1()
-    appear_image('img/notepagenew2.png', gamepad, None, 0, 0, 150, 2)
+    noteimagemanage()
     scoreprint()
-    #pygame.time.delay(int(1000/fps))
-    #pygame.display.flip()
-def display():
-    global clock
-    while True:
-        pygame.display.flip()
-        pygame.time.delay(int(1000/fps))
-
 
 
 def startengine() :
-    global timer, keylist, timelist, crashed, background, note1list, note2list, note3list, note4list, speed, trigger, trigger2, score, grade, combo, max_combo, max_score, clock
+    global timer, keylist, timelist, crashed, background, note1list, note2list, note3list, note4list, speed, trigger, trigger2, score, grade, combo, max_combo, max_score
     note1list, note2list, note3list, note4list = list(), list(), list(), list()
     grade = [0,0,0,0]
     combo = 0
@@ -419,8 +409,6 @@ def startengine() :
     gameend = 0
     score = 0
     max_score = 10 * len(keylist)
-    t2 = threading.Thread(target=display)
-    t2.start()
     while not crashed :
         #while (pygame.mixer.music.get_busy() or trigger == 0) and (cursor < len(keylist)-1 or cursor == len(keylist)-1 or gameend == 0):
         while (pygame.mixer.music.get_busy() or loop < 50) or (len(note1list)+len(note2list)+len(note3list)+len(note4list) > 0):
@@ -465,10 +453,6 @@ def startengine() :
             noteimagemanage()
             scoreprint()
             '''
-            #notelistmanage()
-            #gamebackground1()
-            #noteimagemanage()
-            #scoreprint()
             t1 = threading.Thread(target=set)
             t1.start()
             note = keylist[cursor]
@@ -488,7 +472,9 @@ def startengine() :
             print("max_combo : "+str(max_combo))
             print("score : "+str(score))
             print(str(pygame.mixer.music.get_busy()))
-
+            t1.join()
+            pygame.time.delay(int(1000/fps))
+            pygame.display.flip()
             try :
                 if(timer == float(timelist[cursor]) or timer >= float(timelist[cursor])) :
                     if(note == '1') :
@@ -517,8 +503,6 @@ def startengine() :
                 pygame.time.delay(int(1000/fps))
                 pygame.display.flip()
                 '''
-            #t1.join()
-
         return
                
 
@@ -625,7 +609,7 @@ def gamebackground1() :
     else :
         error(9, 'BackgroundImageError!\nPlease Contact Developer : kevin587121@gmail.com')
     gamepad.blit(background,(0,0))
-    #appear_image('img/notepagenew2.png', gamepad, None, 0, 0, 150, 2)
+    appear_image('img/notepagenew2.png', gamepad, None, 0, 0, 150, 2)
 
 def gamebackground2() :
     global musicnum, musiclist
