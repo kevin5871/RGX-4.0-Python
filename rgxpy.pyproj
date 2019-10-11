@@ -1,0 +1,107 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>ff628b04-020b-4ddd-9bdc-65ab6f5b47e6</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>main.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>rgxpy</Name>
+    <RootNamespace>rgxpy</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="main.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="img\" />
+    <Folder Include="music\" />
+    <Folder Include="Songs\" />
+    <Folder Include="note\" />
+    <Folder Include="Songs\MyHeart\" />
+    <Folder Include="Songs\TestSong1\" />
+    <Folder Include="Songs\NewTimeline\" />
+    <Folder Include="Songs\SkyHigh\" />
+    <Folder Include="ttf\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="img\blackscreen.png" />
+    <Content Include="img\resultpage1.png" />
+    <Content Include="img\resultpage2.jpg" />
+    <Content Include="img\resultpage3.jpg" />
+    <Content Include="img\resultpage4.png" />
+    <Content Include="img\noteimage_good2.png" />
+    <Content Include="img\noteimage_good.png" />
+    <Content Include="img\noteimage_great2.png" />
+    <Content Include="img\noteimage_great.png" />
+    <Content Include="img\noteimage_miss2.png" />
+    <Content Include="img\noteimage_miss.png" />
+    <Content Include="img\noteimage_perfect.png" />
+    <Content Include="img\noteimage_perfect2.png" />
+    <Content Include="Songs\MyHeart\background.jpg" />
+    <Content Include="Songs\MyHeart\select.png" />
+    <Content Include="img\leftarrow.png" />
+    <Content Include="img\mainbar_text.png" />
+    <Content Include="Songs\MyHeart\info.txt" />
+    <Content Include="Songs\NewTimeline\background.png" />
+    <Content Include="Songs\NewTimeline\keynote.txt" />
+    <Content Include="Songs\NewTimeline\select.png" />
+    <Content Include="img\noteimage_normal.png" />
+    <Content Include="img\notepagenew2.png" />
+    <Content Include="img\rightarrow.png" />
+    <Content Include="img\selectmain.jpg" />
+    <Content Include="img\main.png" />
+    <Content Include="img\mainbar.png" />
+    <Content Include="Songs\NewTimeline\info.txt" />
+    <Content Include="Songs\NewTimeline\timenote.txt" />
+    <Content Include="Songs\SkyHigh\background.jpg" />
+    <Content Include="Songs\SkyHigh\select.png" />
+    <Content Include="Songs\MyHeart\song.mp3" />
+    <Content Include="Songs\MyHeart\select.mp3" />
+    <Content Include="Songs\NewTimeline\song.mp3" />
+    <Content Include="music\RGX Intro.mp3" />
+    <Content Include="Songs\SkyHigh\song.mp3" />
+    <Content Include="Songs\NewTimeline\select.mp3" />
+    <Content Include="Songs\SkyHigh\select.mp3" />
+    <Content Include="Songs\MyHeart\keynote.txt" />
+    <Content Include="Songs\MyHeart\timenote.txt" />
+    <Content Include="Songs\SkyHigh\keynote.txt" />
+    <Content Include="Songs\SkyHigh\info.txt" />
+    <Content Include="Songs\SkyHigh\timenote.txt" />
+    <Content Include="Songs\TestSong1\background.png" />
+    <Content Include="Songs\TestSong1\select.png" />
+    <Content Include="Songs\TestSong1\select.mp3" />
+    <Content Include="Songs\TestSong1\song.mp3" />
+    <Content Include="Songs\TestSong1\keynote.txt" />
+    <Content Include="Songs\TestSong1\info.txt" />
+    <Content Include="Songs\TestSong1\timenote.txt" />
+    <Content Include="ttf\AmazOOSTROVv.2.ttf" />
+    <Content Include="ttf\Bittypix-Countdown.ttf" />
+    <Content Include="ttf\Enchanted-Land.ttf" />
+    <Content Include="ttf\KaiGenGothicKR-Regular.ttf" />
+    <Content Include="ttf\Klavika-Regular.ttf" />
+    <Content Include="ttf\Long_Shot.ttf" />
+    <Content Include="ttf\picoblack.ttf" />
+    <Content Include="ttf\picowhite.ttf" />
+    <Content Include="ttf\Rosbed.ttf" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>
