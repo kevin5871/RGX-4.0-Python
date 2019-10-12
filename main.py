@@ -31,7 +31,8 @@ RED = (255,0,0)
 GREEN = (0,255,0)
 pad_width = 1280
 pad_height = 720
-fps = 1000
+fps = 60
+desiredfps = 60
 '''
 def note1_image() :
     global note1list
@@ -123,39 +124,42 @@ def noteimagemanage() :
 '''
 
 def note1_control() :
-    global note1list, speed, combo, max_combo, grade
+    global note1list, speed, combo, max_combo, grade, fps
     #note1list.append(0)
     if(len(note1list) > 0) :
         for x in range(0,len(note1list)) :
-            note1list[x] += speed
+            note1list[x] += 720 / (speed * fps)
         if(note1list[0] > 720) :
              del note1list[0]
+             print("1 deleted")
              grade[0] += 1
              if(max_combo < combo) :
                  max_combo = combo
              combo = 0
         #del note1list[len(note1list) - 1]
 def note2_control() :
-    global note2list, speed, combo, max_combo, grade
+    global note2list, speed, combo, max_combo, grade, fps
     #note2list.append(0)
     if(len(note2list) > 0) :
         for x in range(0,len(note2list))  :
-            note2list[x] += speed
+            note2list[x] += 720 / (speed * fps)
         if(note2list[0] > 720) :
            del note2list[0]
+           print("2 deleted")
            grade[0] += 1
            if(max_combo < combo) :
                max_combo = combo
            combo = 0
         #del note2list[len(note2list) - 1]
 def note3_control() :
-    global note3list, speed, combo, max_combo, grade
+    global note3list, speed, combo, max_combo, grade, fps
     #note3list.append(0)
     if(len(note3list) > 0) :
         for x in range(0,len(note3list))  :
-            note3list[x] += speed
+            note3list[x] += 720 / (speed * fps)
         if(note3list[0] > 720) :
             del note3list[0]
+            print("3 deleted")
             grade[0] += 1
             if(max_combo < combo) :
                 max_combo = combo
@@ -163,13 +167,14 @@ def note3_control() :
                 #break
         #del note3list[len(note3list) - 1]
 def note4_control() :
-    global note4list, speed, combo, max_combo, grade
+    global note4list, speed, combo, max_combo, grade, fps
     #note4list.append(0)
     if(len(note4list) > 0) :
         for x in range(0,len(note4list))  :
-            note4list[x] += speed
+            note4list[x] += 720 / (speed * fps)
         if(note4list[0] > 720) :
              del note4list[0]
+             print("4 deleted")
              grade[0] += 1
              if(max_combo < combo) :
                  max_combo = combo
@@ -269,10 +274,11 @@ def note1clicked() :
                     if(max_combo < combo) :
                         max_combo = combo
                     combo = 0
-                    appear_image('img/noteimage_miss22.png', gamepad, None, 215, note1list[x], 255, 1)
+                    appear_image('img/noteimage_miss2.png', gamepad, None, 215, note1list[x], 255, 1)
             del note1list[0:x]
             break
-    del note1list[0]
+    try:  del note1list[0]
+    except:  pass
 def note2clicked() :
     global note2list, max_combo, combo, grade, score
     for x in range(0, len(note2list)) :
@@ -310,7 +316,8 @@ def note2clicked() :
                     combo = 0
             del note2list[0:x]
             break
-    del note2list[0]
+    try:  del note2list[0]
+    except:  pass
 def note3clicked() :
     global note3list, max_combo, combo, grade, score
     for x in range(0, len(note3list)) :
@@ -348,7 +355,8 @@ def note3clicked() :
                     appear_image('img/noteimage_miss2.png', gamepad, None, 640, note3list[x], 255, 1)
             del note3list[0:x]
             break
-    del note3list[0]
+    try:  del note3list[0]
+    except:  pass
 def note4clicked() :
     global note4list, max_combo, combo, grade, score
     for x in range(0, len(note4list)) :
@@ -386,7 +394,8 @@ def note4clicked() :
                     appear_image('img/noteimage_miss2.png', gamepad, None, 855, note4list[x], 255, 1)
             del note4list[0:x]
             break
-    del note4list[0]
+    try:  del note4list[0]
+    except:  pass
 
 def set() :
     notelistmanage()
@@ -396,14 +405,15 @@ def set() :
 
 
 def startengine() :
-    global timer, keylist, timelist, crashed, background, note1list, note2list, note3list, note4list, speed, trigger, trigger2, score, grade, combo, max_combo, max_score
+    global fps, timer, keylist, timelist, crashed, background, note1list, note2list, note3list, note4list, speed, trigger, trigger2, score, grade, combo, max_combo, max_score
     note1list, note2list, note3list, note4list = list(), list(), list(), list()
+    clock = pygame.time.Clock()
     grade = [0,0,0,0]
     combo = 0
     max_combo = 0
     cursor = 0
     start_time = pygame.time.get_ticks()
-    speed = 50
+    speed = 1
     trigger2 = 1
     loop = 0
     gameend = 0
@@ -414,22 +424,17 @@ def startengine() :
         while (pygame.mixer.music.get_busy() or loop < 50) or (len(note1list)+len(note2list)+len(note3list)+len(note4list) > 0):
             for event in pygame.event.get() :
                 if event.type == pygame.QUIT :
-                    t1.terminate()
                     crashed = True
                     return
                 if event.type == pygame.KEYDOWN :
                     if event.key == pygame.K_d :
-                        t = threading.Thread(target=note1clicked)
-                        t.start()
+                        note1clicked()
                     elif event.key == pygame.K_f :
-                        t = threading.Thread(target=note2clicked)
-                        t.start()
+                        note2clicked()
                     elif event.key == pygame.K_j :
-                        t = threading.Thread(target=note3clicked)
-                        t.start()
+                        note3clicked()
                     elif event.key == pygame.K_k :
-                        t = threading.Thread(target=note4clicked)
-                        t.start()
+                        note4clicked()
                     else :
                         pass
             loop += 1
@@ -437,6 +442,7 @@ def startengine() :
             #if(loop % 25 == 0) :
                 #notelistdelete()
             timer = (pygame.time.get_ticks() - start_time) / 1000
+            fps = clock.get_fps()
             '''
             t1 = threading.Thread(target=notelistmanage)
             t2 = threading.Thread(target=gamebackground1)
@@ -453,9 +459,8 @@ def startengine() :
             noteimagemanage()
             scoreprint()
             '''
-            t1 = threading.Thread(target=set)
-            t1.start()
             note = keylist[cursor]
+            """
             if(platform.system() == 'Windows') :
                 os.system('cls')
             else :
@@ -472,23 +477,29 @@ def startengine() :
             print("max_combo : "+str(max_combo))
             print("score : "+str(score))
             print(str(pygame.mixer.music.get_busy()))
-            t1.join()
-            pygame.time.delay(int(1000/fps))
+            """
+            set()
+            text(str(int(clock.get_fps())),'ttf/KaiGenGothicKR-Regular.ttf', 50, WHITE, 50, 50)
+            clock.tick(desiredfps)
             pygame.display.flip()
             try :
-                if(timer == float(timelist[cursor]) or timer >= float(timelist[cursor])) :
+                if(timer >= float(timelist[cursor])) :
                     if(note == '1') :
                         if not cursor+1 == len(keylist) :
                             note1list.append(0)
+                            print(note, "spawned")
                     elif(note == '2') :
                         if not cursor+1 == len(keylist) :
                             note2list.append(0)
+                            print(note, "spawned")
                     elif(note == '3') :
                         if not cursor+1 == len(keylist) :
                             note3list.append(0)
+                            print(note, "spawned")
                     elif(note == '4') :
                         if not cursor+1 == len(keylist) :
                             note4list.append(0)
+                            print(note, "spawned")
                     elif(note == '') :
                         pass
                     else :
@@ -500,7 +511,7 @@ def startengine() :
             except IndexError : 
                 pass
                 '''
-                pygame.time.delay(int(1000/fps))
+                pygame.time.delay(int(1000/desiredfps))
                 pygame.display.flip()
                 '''
         return
@@ -511,8 +522,8 @@ def readnote(num) :
     keylist = open(os.path.join('Songs', musiclist[musicnum-1], 'keynote.txt'), 'r').read().split('\n')
     timelist = open(os.path.join('Songs', musiclist[musicnum-1], 'timenote.txt'), 'r').read().split('\n')
     
-    print(keylist)
-    print(timelist)
+    #print(keylist)
+    #print(timelist)
 
 def error(num, message) : # Error message
     global crashed
@@ -601,7 +612,6 @@ def selectimg(num): #Song Info Image / Arrows
 def gamebackground1() :
     global musicnum, musiclist
     gamepad.fill(BLACK)
-
     if(os.path.exists(os.path.join('Songs', musiclist[musicnum-1], 'background.jpg'))) :
         background = pygame.image.load(os.path.join('Songs', musiclist[musicnum-1], 'background.jpg'))
     elif (os.path.exists(os.path.join('Songs', musiclist[musicnum-1], 'background.png'))) :
@@ -927,7 +937,7 @@ def runGame(): # Main Script
         else :
             error(0, 'UnexpectedAccesspoint\nPlease Contact Developer : kevin587121@gmail.com')
             crashed = True
-        clock.tick(fps)
+        clock.tick(desiredfps)
     pygame.quit()
 
 def music() : 
