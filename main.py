@@ -131,11 +131,12 @@ def note1_control() :
             note1list[x] += 720 / (speed * fps)
         if(note1list[0] > 720) :
              del note1list[0]
-             print("1 deleted")
+             #print("1 deleted")
              grade[0] += 1
              if(max_combo < combo) :
                  max_combo = combo
              combo = 0
+             appear_image('img/noteimage_miss2.png', gamepad, None, 215, 700, 255, 1)
         #del note1list[len(note1list) - 1]
 def note2_control() :
     global note2list, speed, combo, max_combo, grade, fps
@@ -145,11 +146,12 @@ def note2_control() :
             note2list[x] += 720 / (speed * fps)
         if(note2list[0] > 720) :
            del note2list[0]
-           print("2 deleted")
+           #print("2 deleted")
            grade[0] += 1
            if(max_combo < combo) :
                max_combo = combo
            combo = 0
+           appear_image('img/noteimage_miss2.png', gamepad, None, 215, 700, 255, 1)
         #del note2list[len(note2list) - 1]
 def note3_control() :
     global note3list, speed, combo, max_combo, grade, fps
@@ -159,11 +161,12 @@ def note3_control() :
             note3list[x] += 720 / (speed * fps)
         if(note3list[0] > 720) :
             del note3list[0]
-            print("3 deleted")
+            #print("3 deleted")
             grade[0] += 1
             if(max_combo < combo) :
                 max_combo = combo
             combo = 0
+            appear_image('img/noteimage_miss2.png', gamepad, None, 215, 700, 255, 1)
                 #break
         #del note3list[len(note3list) - 1]
 def note4_control() :
@@ -174,11 +177,12 @@ def note4_control() :
             note4list[x] += 720 / (speed * fps)
         if(note4list[0] > 720) :
              del note4list[0]
-             print("4 deleted")
+             #print("4 deleted")
              grade[0] += 1
              if(max_combo < combo) :
                  max_combo = combo
              combo = 0
+             appear_image('img/noteimage_miss2.png', gamepad, None, 215, 700, 255, 1)
                 #break
         #del note4list[len(note4list) - 1]
 
@@ -263,11 +267,15 @@ def note1clicked() :
                     grade[2] += 1
                     score += 7
                     combo += 1
+                    if(max_combo < combo) :
+                        max_combo = combo
                     appear_image('img/noteimage_great2.png', gamepad, None, 215, note1list[x], 255, 1)
                 elif 500 <= note1list[x] and note1list[x] <= 625 :
                     grade[3] += 1
                     score += 10
                     combo += 1
+                    if(max_combo < combo) :
+                        max_combo = combo
                     appear_image('img/noteimage_perfect2.png', gamepad, None, 215, note1list[x], 255, 1)
                 else :
                     grade[0] += 1
@@ -301,12 +309,16 @@ def note2clicked() :
                 elif 425 <= note2list[x] and note2list[x] <= 500 :
                     grade[2] += 1
                     score += 7
+                    if(max_combo < combo) :
+                        max_combo = combo
                     combo += 1
                     appear_image('img/noteimage_great2.png', gamepad, None, 430, note2list[x], 255, 1)
                 elif 500 <= note2list[x] and note2list[x] <= 625 :
                     grade[3] += 1
                     score += 10
                     combo += 1
+                    if(max_combo < combo) :
+                        max_combo = combo
                     appear_image('img/noteimage_perfect2.png', gamepad, None, 430, note2list[x], 255, 1)
                 else :
                     grade[0] += 1
@@ -341,11 +353,15 @@ def note3clicked() :
                     grade[2] += 1
                     score += 7
                     combo += 1
+                    if(max_combo < combo) :
+                        max_combo = combo
                     appear_image('img/noteimage_great2.png', gamepad, None, 640, note3list[x], 255, 1)
                 elif 500 <= note3list[x] and note3list[x] <= 625 :
                     grade[3] += 1
                     score += 10 
                     combo += 1
+                    if(max_combo < combo) :
+                        max_combo = combo
                     appear_image('img/noteimage_perfect2.png', gamepad, None, 640, note3list[x], 255, 1)
                 else :
                     grade[0] += 1
@@ -380,23 +396,28 @@ def note4clicked() :
                     grade[2] += 1
                     score += 7
                     combo += 1
+                    if(max_combo < combo) :
+                        max_combo = combo     
                     appear_image('img/noteimage_great2.png', gamepad, None, 855, note4list[x], 255, 1)
                 elif 500 <= note4list[x] and note4list[x] <= 625 :
                     grade[3] += 1
                     score += 10
                     combo += 1
+                    if(max_combo < combo) :
+                        max_combo = combo
                     appear_image('img/noteimage_perfect2.png', gamepad, None, 855, note4list[x], 255, 1)
                 else :
                     grade[0] += 1
                     if(max_combo < combo) :
                         max_combo = combo
                     combo = 0
+                    if(max_combo < combo) :
+                        max_combo = combo
                     appear_image('img/noteimage_miss2.png', gamepad, None, 855, note4list[x], 255, 1)
             del note4list[0:x]
             break
     try:  del note4list[0]
     except:  pass
-
 def set() :
     notelistmanage()
     gamebackground1()
@@ -442,7 +463,9 @@ def startengine() :
             #if(loop % 25 == 0) :
                 #notelistdelete()
             timer = (pygame.time.get_ticks() - start_time) / 1000
-            fps = clock.get_fps()
+            #fps = clock.get_fps()
+            if not clock.get_fps() <= 0 :
+                fps = clock.get_fps()
             '''
             t1 = threading.Thread(target=notelistmanage)
             t2 = threading.Thread(target=gamebackground1)
@@ -466,17 +489,17 @@ def startengine() :
             else :
                 os.system('clear')
             print("Cursor : " + str(cursor))
-            print("Note : " + str(note))
-            print(note1list)
-            print(note2list)    
-            print(note3list)
-            print(note4list)
-            print(grade)
-            print("loop : "+str(loop))
-            print("combo : "+str(combo))
-            print("max_combo : "+str(max_combo))
-            print("score : "+str(score))
-            print(str(pygame.mixer.music.get_busy()))
+            #print("Note : " + str(note))
+            #print(note1list)
+            #print(note2list)    
+            #print(note3list)
+            #print(note4list)
+            #print(grade)
+            #print("loop : "+str(loop))
+            #print("combo : "+str(combo))
+            #print("max_combo : "+str(max_combo))
+            #print("score : "+str(score))
+            #print(str(pygame.mixer.music.get_busy()))
             """
             set()
             text(str(int(clock.get_fps())),'ttf/KaiGenGothicKR-Regular.ttf', 50, WHITE, 50, 50)
@@ -487,19 +510,19 @@ def startengine() :
                     if(note == '1') :
                         if not cursor+1 == len(keylist) :
                             note1list.append(0)
-                            print(note, "spawned")
+                            #print(note, "spawned")
                     elif(note == '2') :
                         if not cursor+1 == len(keylist) :
                             note2list.append(0)
-                            print(note, "spawned")
+                            #print(note, "spawned")
                     elif(note == '3') :
                         if not cursor+1 == len(keylist) :
                             note3list.append(0)
-                            print(note, "spawned")
+                            #print(note, "spawned")
                     elif(note == '4') :
                         if not cursor+1 == len(keylist) :
                             note4list.append(0)
-                            print(note, "spawned")
+                            #print(note, "spawned")
                     elif(note == '') :
                         pass
                     else :
