@@ -2,4 +2,4 @@ TestSongFile1
 TestSongFile1
 0
 unvalued
-1000
+700
