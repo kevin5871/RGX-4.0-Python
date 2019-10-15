@@ -2,8 +2,8 @@
                                                     ##############################
                                                     # RGX 4.0 Main Engine Script #
                                                     # Written by Python          #
-                                                    # Engine Ver : v1.12b        #
-                                                    # Version date : 2019.10.09  #
+                                                    # Engine Ver : v1.22b        #
+                                                    # Version date : 2019.10.15  #
                                                     # Made by kevin5871(sfcatz)  #
                                                     ############################## 
 
@@ -775,6 +775,7 @@ def runGame(): # Main Script
         elif(scenenum == 4) :
             readycountdown = 4
         elif(scenenum == 5) :
+            pygame.time.delay(100)
             if readycountdown == 4 :
                 for x in range(0,10,1) :
                     text('SELECTED!!!', 'ttf/Rosbed.ttf', 100, BLUE, 675, 250)
