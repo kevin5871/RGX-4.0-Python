@@ -2,9 +2,10 @@
                                                     ##############################
                                                     # RGX 4.0 Main Engine Script #
                                                     # Written by Python          #
-                                                    # Engine Ver : v1.22b        #
-                                                    # Version date : 2019.10.15  #
+                                                    # Engine Ver : v1.23b        #
+                                                    # Version date : 2019.10.17  #
                                                     # Made by kevin5871(sfcatz)  #
+                                                    # Thanks to : Kokosei J      #
                                                     ############################## 
 
 
@@ -611,7 +612,7 @@ def selecttext(songname, producer, level, levelstat) : # Song Info text (Main Fr
         elif(levelstat == "hard") :
             text("(HARD)",'ttf/KaiGenGothicKR-Regular.ttf', 24, (255,140,0), 735, 632)
         elif(levelstat == "insane") :
-            text("(INSANE)",'ttf/KaiGenGothicKR-Regular.ttf', 24, RED, 735, 632)
+            text("(INSANE)",'ttf/KaiGenGothicKR-Regular.ttf', 24, RED, 745, 632)
         elif(levelstat == "crazy") :
             text("(EASY)",'ttf/KaiGenGothicKR-Regular.ttf', 24, (148,0,211), 735, 632)
         else :
