@@ -2,8 +2,8 @@
                                                     ##############################
                                                     # RGX 4.0 Main Engine Script #
                                                     # Written by Python          #
-                                                    # Engine Ver : v1.23b        #
-                                                    # Version date : 2019.10.17  #
+                                                    # Engine Ver : v1.3b         #
+                                                    # Version date : 2019.10.18  #
                                                     # Made by kevin5871(sfcatz)  #
                                                     # Thanks to : Kokosei J      #
                                                     ############################## 
@@ -24,6 +24,11 @@ import os
 import threading
 import multiprocessing 
 import random
+import requests
+
+# pip install pygame
+# pip install requests
+
 # CONST variable
 WHITE = (255,255,255)
 BLACK = (0,0,0)
@@ -32,6 +37,7 @@ RED = (255,0,0)
 GREEN = (0,255,0)
 pad_width = 1280
 pad_height = 720
+VERSION = '1.3b'
 fps = 60
 desiredfps = 60
 '''
@@ -435,7 +441,6 @@ def startengine() :
     max_combo = 0
     cursor = 0
     start_time = pygame.time.get_ticks()
-    speed = 1
     trigger2 = 1
     loop = 0
     gameend = 0
@@ -476,8 +481,6 @@ def startengine() :
             t2.start()
             t3.start()
             t4.start()
-            '''
-            '''
             notelistmanage()
             gamebackground1()
             noteimagemanage()
@@ -588,8 +591,10 @@ def back(): # Draw Background (background variable)
 
 
 def soundplay(string, mode): # Play Sound (Repeat)
+    global volume
     if (not pygame.mixer.music.get_busy()) :
         soundObj = pygame.mixer.music.load(string)
+        pygame.mixer.music.set_volume(volume / 100)
         pygame.mixer.music.play(mode)
 
 def selectsound(num): # Select Sound play
@@ -660,8 +665,10 @@ def gamebackground2() :
 
 
 def runGame(): # Main Script
-    global gamepad, clock, scenenum, background, lastscene, musicnum, imgnum, crashed, keylist, timelist, trigger, musiclist, grade, percent, maxmax_combo
+    global gamepad, clock, scenenum, background, lastscene, musicnum, imgnum, crashed, keylist, timelist, trigger, musiclist, grade, percent, max_combo, volume, speed, MUSIC_MAXNUM
     crashed = False
+    volume = 100
+    speed = 1
     #scenenum = 8
     while not crashed:
         for event in pygame.event.get():
@@ -675,6 +682,20 @@ def runGame(): # Main Script
                     elif scenenum == 4 :
                         lastscene = 5
                         scenenum = 2
+                    elif scenenum == 13 :
+                        volume = int(inputtxt)
+                        if(volume > 100) :
+                            volume = 100
+                        elif(volume < 0) :
+                            volume = 0
+                        scenenum = 11
+                    elif scenenum == 14 :
+                        speed = int(inputtxt)
+                        if(speed > 4) :
+                            speed = 4
+                        elif(speed < 1) :
+                            speed = 1
+                        scenenum = 11
                     else :
                         pass
                 elif event.key == pygame.K_RIGHT : # Right Key
@@ -704,6 +725,58 @@ def runGame(): # Main Script
                         pygame.time.delay(1000)
                         lastscene = 1
                         scenenum = 2
+                    if scenenum == 12 :
+                        pygame.time.delay(1000)
+                        lastscene = 1
+                        scenenum = 2
+                elif event.key == pygame.K_BACKSPACE : #BackSpace
+                    if scenenum == 13 or scenenum == 14: 
+                        inputtxt = inputtxt[:-1]
+                elif event.key == pygame.K_s :
+                    #print('A')
+                    if scenenum == 4 :
+                        lastscene = 7
+                        scenenum = 2
+                elif event.key == pygame.K_1 :
+                    if scenenum == 12 :
+                        scenenum = 13
+                    if scenenum == 13 or scenenum == 14 : 
+                        inputtxt += '1'
+                elif event.key == pygame.K_2 :
+                    if scenenum == 12 :
+                        scenenum = 14
+                    if scenenum == 13 or scenenum == 14: 
+                        inputtxt += '2'
+                elif event.key == pygame.K_3 :
+                    if scenenum == 12 :
+                        scenenum = 15
+                    if scenenum == 13 or scenenum == 14: 
+                        inputtxt += '3'
+                elif event.key == pygame.K_4 :
+                    if scenenum == 12 :
+                        scenenum = 16
+                    if scenenum == 13 or scenenum == 14: 
+                        inputtxt += '4'
+                elif event.key == pygame.K_5 :
+                    if scenenum == 12 :
+                        scenenum = 17
+                    if scenenum == 13 or scenenum == 14: 
+                        inputtxt += '5'
+                elif event.key == pygame.K_6 :
+                    if scenenum == 13 or scenenum == 14: 
+                        inputtxt += '6'
+                elif event.key == pygame.K_7 :
+                    if scenenum == 13 or scenenum == 14: 
+                        inputtxt += '7'
+                elif event.key == pygame.K_8 :
+                    if scenenum == 13 or scenenum == 14: 
+                        inputtxt += '8'
+                elif event.key == pygame.K_9 :
+                    if scenenum == 13 or scenenum == 14: 
+                        inputtxt += '9'
+                elif event.key == pygame.K_0 :
+                    if scenenum == 13 or scenenum == 14: 
+                        inputtxt += '0'
             elif event.type == pygame.MOUSEBUTTONDOWN : # Mouse Clicked
                 if event.button == 1 : # Left Button Clicked
                     if scenenum == 4 :
@@ -763,6 +836,9 @@ def runGame(): # Main Script
                 scenenum = 5
             elif(lastscene == 6) :
                 gamepad.fill(BLACK)
+            elif(lastscene == 7) :
+                gamepad.fill(BLACK)
+                scenenum = 11
             else :
                 error(3, 'UnexpectedAccesspoint\nPlease Contact Developer : kevin587121@gmail.com')
                 crashed = True
@@ -959,6 +1035,55 @@ def runGame(): # Main Script
             scenenum = 10
         elif(scenenum == 10) :
             pass
+        elif(scenenum == 11) :
+            gamepad.fill(BLACK)
+            pygame.display.flip()
+            appear_image('img/settingimage.jpg', gamepad, None, 0,0,255,0)
+            s = pygame.Surface((600,660))  
+            s.set_alpha(180)                
+            s.fill((0,0,0))           
+            pygame.display.update(gamepad.blit(s, (350,20)))
+            text('Settings', 'ttf/KaiGenGothicKR-Regular.ttf', 50, WHITE, 650, 170)
+            text('1. Volume', 'ttf/KaiGenGothicKR-Regular.ttf', 30, WHITE, 500, 250)
+            text(str(volume), 'ttf/KaiGenGothicKR-Regular.ttf', 30, WHITE, 850, 250)
+            text('2. Speed', 'ttf/KaiGenGothicKR-Regular.ttf', 30, WHITE, 490, 310)
+            text(str(speed), 'ttf/KaiGenGothicKR-Regular.ttf', 30, WHITE, 850, 310)
+            text('Default : 1 (Recommended)', 'ttf/KaiGenGothicKR-Regular.ttf', 20, WHITE, 550, 340)
+            text('3. Key Settings', 'ttf/KaiGenGothicKR-Regular.ttf', 30, WHITE, 530, 400)
+            text('4. Refresh Song List', 'ttf/KaiGenGothicKR-Regular.ttf', 30, WHITE, 560, 470)
+            text('5. Check Updates', 'ttf/KaiGenGothicKR-Regular.ttf', 30, WHITE, 540, 540)
+            text('Space to Exit', 'ttf/KaiGenGothicKR-Regular.ttf', 30, WHITE, 1150, 700)
+            scenenum = 12
+        elif(scenenum == 12) :
+            pass
+            inputtxt = ''
+        elif(scenenum == 13) :
+            gamepad.fill(BLACK)
+            pygame.time.delay(100)
+            text('Enter Your Volume (1~100)', 'ttf/KaiGenGothicKR-Regular.ttf', 60, WHITE, 600, 300)
+            text(str(inputtxt), 'ttf/KaiGenGothicKR-Regular.ttf', 50, WHITE, 500, 375)
+            pygame.display.flip()
+            clock.tick(desiredfps)
+        elif(scenenum == 14) :
+            gamepad.fill(BLACK)
+            pygame.time.delay(100)
+            text('Enter Your Speed (1~4)', 'ttf/KaiGenGothicKR-Regular.ttf', 60, WHITE, 600, 300)
+            text(str(inputtxt), 'ttf/KaiGenGothicKR-Regular.ttf', 50, WHITE, 500, 375)
+            pygame.display.flip()
+            clock.tick(desiredfps)
+        elif(scenenum == 15) :
+            messagebox.showinfo('Info.', 'Preparing.')
+            scenenum = 12
+        elif(scenenum == 16) :
+            messagebox.showwarning('Warning.', 'This game will restart after refreshing.')
+            search('Songs')
+            MUSIC_MAXNUM = len(musiclist)
+            Gameintro()
+            lastscene = 1            
+            scenenum = 2
+        elif(scenenum == 17) :
+            messagebox.showinfo('Info.', 'Preparing')
+            scenenum = 12
         else :
             error(0, 'UnexpectedAccesspoint\nPlease Contact Developer : kevin587121@gmail.com')
             crashed = True
@@ -1012,7 +1137,6 @@ def search(dir) :
     musiclist = os.listdir(dir)
     print(musiclist)
 pygame.init()
-
 if __name__ == "__main__" :
     initGame() # Init
     search('Songs')

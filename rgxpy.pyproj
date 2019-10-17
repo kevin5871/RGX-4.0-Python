@@ -49,6 +49,7 @@
     <Content Include="img\noteimage_miss.png" />
     <Content Include="img\noteimage_perfect.png" />
     <Content Include="img\noteimage_perfect2.png" />
+    <Content Include="img\settingimage.jpg" />
     <Content Include="Songs\DriftveilCity\background.png" />
     <Content Include="Songs\DriftveilCity\info.txt" />
     <Content Include="Songs\DriftveilCity\keynote.txt" />
@@ -93,6 +94,7 @@
     <Content Include="Songs\TestSong2\select.png" />
     <Content Include="Songs\TestSong2\song.mp3" />
     <Content Include="Songs\TestSong2\timenote.txt" />
+    <Content Include="version.txt" />
     <Content Include="ttf\AmazOOSTROVv.2.ttf" />
     <Content Include="ttf\Bittypix-Countdown.ttf" />
     <Content Include="ttf\Enchanted-Land.ttf" />
