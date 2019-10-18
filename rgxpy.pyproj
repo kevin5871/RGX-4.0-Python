@@ -89,6 +89,7 @@
     <Content Include="Songs\SkyHigh\keynote.txt" />
     <Content Include="Songs\SkyHigh\info.txt" />
     <Content Include="Songs\SkyHigh\timenote.txt" />
+    <Content Include="Songs\songversion_server.txt" />
     <Content Include="Songs\TestSong2\background.png" />
     <Content Include="Songs\TestSong2\info.txt" />
     <Content Include="Songs\TestSong2\keynote.txt" />
