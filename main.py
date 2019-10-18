@@ -1210,7 +1210,11 @@ def songupdate() :
 def search(dir) :
     global musiclist
     musiclist = list()
-    musiclist = os.listdir(dir)
+    musiclist2 = list()
+    musiclist2 = os.listdir(dir)
+    for x in  musiclist2 :
+        if not (x == 'songversion.txt' or x == 'songversion_server.txt'):
+            musiclist.append(x)
     print(musiclist)
 pygame.init()
 if __name__ == "__main__" :

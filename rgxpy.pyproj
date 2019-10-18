@@ -29,11 +29,9 @@
     <Folder Include="etc\" />
     <Folder Include="Songs\" />
     <Folder Include="note\" />
-    <Folder Include="Songs\DriftveilCity\" />
     <Folder Include="Songs\MyHeart\" />
     <Folder Include="Songs\NewTimeline\" />
     <Folder Include="Songs\SkyHigh\" />
-    <Folder Include="Songs\TestSong2\" />
     <Folder Include="ttf\" />
   </ItemGroup>
   <ItemGroup>
@@ -52,13 +50,7 @@
     <Content Include="img\noteimage_perfect.png" />
     <Content Include="img\noteimage_perfect2.png" />
     <Content Include="img\settingimage.jpg" />
-    <Content Include="Songs\DriftveilCity\background.png" />
-    <Content Include="Songs\DriftveilCity\info.txt" />
-    <Content Include="Songs\DriftveilCity\keynote.txt" />
-    <Content Include="Songs\DriftveilCity\select.mp3" />
-    <Content Include="Songs\DriftveilCity\select.png" />
-    <Content Include="Songs\DriftveilCity\song.mp3" />
-    <Content Include="Songs\DriftveilCity\timenote.txt" />
+    <Content Include="SongData.zip" />
     <Content Include="Songs\MyHeart\background.jpg" />
     <Content Include="Songs\MyHeart\select.png" />
     <Content Include="img\leftarrow.png" />
@@ -90,13 +82,6 @@
     <Content Include="Songs\SkyHigh\info.txt" />
     <Content Include="Songs\SkyHigh\timenote.txt" />
     <Content Include="Songs\songversion_server.txt" />
-    <Content Include="Songs\TestSong2\background.png" />
-    <Content Include="Songs\TestSong2\info.txt" />
-    <Content Include="Songs\TestSong2\keynote.txt" />
-    <Content Include="Songs\TestSong2\select.mp3" />
-    <Content Include="Songs\TestSong2\select.png" />
-    <Content Include="Songs\TestSong2\song.mp3" />
-    <Content Include="Songs\TestSong2\timenote.txt" />
     <Content Include="Songs\songversion.txt" />
     <Content Include="version.txt" />
     <Content Include="ttf\AmazOOSTROVv.2.ttf" />
