@@ -38,7 +38,7 @@ RED = (255,0,0)
 GREEN = (0,255,0)
 pad_width = 1280
 pad_height = 720
-VERSION = '1.31b'
+VERSION = '1.4b'
 fps = 60
 desiredfps = 60
 '''
