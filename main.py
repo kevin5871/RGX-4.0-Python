@@ -2,7 +2,7 @@
                                                     ##############################
                                                     # RGX 4.0 Main Engine Script #
                                                     # Written by Python          #
-                                                    # Engine Ver : v1.31b        #
+                                                    # Engine Ver : v1.4b         #
                                                     # Version date : 2019.10.18  #
                                                     # Made by kevin5871(sfcatz)  #
                                                     # Thanks to : Kokosei J      #
@@ -25,6 +25,7 @@ import os
 import threading
 import multiprocessing 
 import random
+import zipfile
 
 # pip install pygame
 # pip install requests
@@ -71,6 +72,7 @@ def DrawBar(pos, size, borderC, barC, progress, text1, textC):
     innerSize = ((size[0]-6) * progress, size[1]-6)
     pygame.draw.rect(gamepad, barC, (*innerPos, *innerSize))
     text(text1, 'ttf/KaiGenGothicKR-Regular.ttf', 20, textC, pos[0]-75, pos[1]+10)
+    #text(str(progress*100), 'ttf/KaiGenGothicKR-Regular.ttf', 20, textC, pos[0]+75, pos[1]+10)
 
 
 def download_small(url, file_name) :
@@ -1193,17 +1195,35 @@ def Gameintro(): # Game Intro
         scenenum = 2
         return
 def songupdate() :
+    global crashed
+    crashed = False
     try :
         os.remove('Songs/songversion_server.txt')
     except :
         pass
-    download_small('https://raw.githubusercontent.com/kevin5871/RGX-4.0-Python/test1/Songs/songversion.txt','Songs/songversion_server.txt')
+    download_small('https://raw.githubusercontent.com/kevin5871/RGX-4.0-Python/test1/Songs/songversion_server.txt','Songs/songversion_server.txt')
     f = open('Songs/songversion.txt', 'r')
     f2 = open('Songs/songversion_server.txt', 'r')
     songversion = f.readline()
     serverversion = f2.readline()
+    print(serverversion)
+    print(songversion)
     if(songversion < serverversion) :
-        messagebox.showinfo('Info.', 'Current Version : ' + songversion + '\n' + 'Server Version (Test Channel) : ' + serverversion + '\n' + 'Need Update before playing. Please Wait') 
+        gamepad.fill(BLACK)
+        messagebox.showinfo('Info.', 'Current Version : ' + songversion + '\n' + 'Server Version (Test Channel) : ' + serverversion + '\n' + 'Need Update before playing. Please Wait')
+        download_big('https://github.com/kevin5871/RGX-4.0-Python/blob/test1/SongData.zip?raw=true', 'SongDataDownloaded.zip', 1, (450,350),(400, 20),WHITE, WHITE)
+        zip = zipfile.ZipFile('SongDataDownloaded.zip')
+        zip.extractall('Songs')
+        zip.close()
+        os.remove('SongDataDownloaded.zip')
+        f.close()
+        f = open('Songs/songversion.txt', 'w')
+        f.writelines(serverversion)
+        f.close()
+        f = open('Songs/songversion.txt' ,'r')
+        songversion = f.readline()
+        messagebox.showinfo('Info.', 'Suceesfully Updated to : '+songversion)
+        search('Songs')
     else :
         pass
 
