@@ -1184,6 +1184,7 @@ def Gameintro(): # Game Intro
         pygame.display.update()
         for x in range(0,100,1) :
             DrawBar((1100,700),(200,20), BLACK, (0,128,0), x/100, '', WHITE)
+
             pygame.time.delay(10)
             #print(x)
             pygame.display.flip()
