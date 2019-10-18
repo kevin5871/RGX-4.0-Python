@@ -2,7 +2,7 @@
                                                     ##############################
                                                     # RGX 4.0 Main Engine Script #
                                                     # Written by Python          #
-                                                    # Engine Ver : v1.3b         #
+                                                    # Engine Ver : v1.31b        #
                                                     # Version date : 2019.10.18  #
                                                     # Made by kevin5871(sfcatz)  #
                                                     # Thanks to : Kokosei J      #
@@ -19,12 +19,12 @@ import pygame
 from pygame.locals import *
 from tkinter import *
 from tkinter import messagebox
+import requests
 import platform
 import os
 import threading
 import multiprocessing 
 import random
-import requests
 
 # pip install pygame
 # pip install requests
@@ -37,7 +37,7 @@ RED = (255,0,0)
 GREEN = (0,255,0)
 pad_width = 1280
 pad_height = 720
-VERSION = '1.3b'
+VERSION = '1.31b'
 fps = 60
 desiredfps = 60
 '''
@@ -64,10 +64,54 @@ def note4_image() :
 '''
 
 
+def DrawBar(pos, size, borderC, barC, progress, text1, textC):
+
+    pygame.draw.rect(gamepad, borderC, (*pos, *size), 1)
+    innerPos  = (pos[0]+3, pos[1]+3)
+    innerSize = ((size[0]-6) * progress, size[1]-6)
+    pygame.draw.rect(gamepad, barC, (*innerPos, *innerSize))
+    text(text1, 'ttf/KaiGenGothicKR-Regular.ttf', 20, textC, pos[0]-75, pos[1]+10)
 
 
+def download_small(url, file_name) :
+    with open(file_name, "wb") as file:   
+        response = requests.get(url)               
+        file.write(response.content)
 
+def download_big(url, filename, barswitch, barpos, barsize, barborderC, barC):
 
+    global done, crashed
+    done = 0
+    while not crashed :
+        for event in pygame.event.get() :
+            if event.type == pygame.QUIT :
+                crashed = True
+                return
+
+        with open(filename, 'wb') as f:
+            response = requests.get(url, stream=True)
+            total = response.headers.get('content-length')
+            if total is None:
+                f.write(response.content)
+            else:
+                downloaded = 0
+                total = int(total)
+                print(total)
+                #for data in response.iter_content(chunk_size=max(int(total/1000), 1024*1024)):
+                for data in response.iter_content(chunk_size=int(total/1000)):
+                    pygame.event.pump()
+                    downloaded += len(data)
+                    f.write(data)
+                    done = int((downloaded/total) * 100)
+                    #done2 = done/total
+                    #sys.stdout.write("\r[%s%s]" % ('=' * done, ' ' * (50-done)) )    
+                    #sys.stdout.flush()
+                    print(done)
+                    if barswitch == 1 :
+                        DrawBar(barpos,barsize, barborderC, barC, done/100, 'Downloading...', WHITE)
+                        pygame.display.flip()
+                        clock.tick(desiredfps)
+        return
 
 def note1_image() :
     global note1list
@@ -665,7 +709,7 @@ def gamebackground2() :
 
 
 def runGame(): # Main Script
-    global gamepad, clock, scenenum, background, lastscene, musicnum, imgnum, crashed, keylist, timelist, trigger, musiclist, grade, percent, max_combo, volume, speed, MUSIC_MAXNUM
+    global gamepad, clock, scenenum, background, lastscene, musicnum, imgnum, crashed, keylist, timelist, trigger, musiclist, grade, percent, max_combo, volume, speed, MUSIC_MAXNUM, done
     crashed = False
     volume = 100
     speed = 1
@@ -1075,15 +1119,26 @@ def runGame(): # Main Script
             messagebox.showinfo('Info.', 'Preparing.')
             scenenum = 12
         elif(scenenum == 16) :
-            messagebox.showwarning('Warning.', 'This game will restart after refreshing.')
+            messagebox.showwarning('Warning.', 'This game will go back to select page after refreshing.')
             search('Songs')
             MUSIC_MAXNUM = len(musiclist)
             Gameintro()
             lastscene = 1            
             scenenum = 2
         elif(scenenum == 17) :
-            messagebox.showinfo('Info.', 'Preparing')
-            scenenum = 12
+            #https://raw.githubusercontent.com/kevin5871/RGX-4.0-Python/test1/version.txt
+            try :
+                os.remove('etc/serverversion.txt')
+            except :
+                pass
+            download_small('https://raw.githubusercontent.com/kevin5871/RGX-4.0-Python/test1/version.txt','etc/serverversion.txt')
+            f = open('etc/serverversion.txt', 'r')
+            serverversion = f.readline()
+            if(VERSION == serverversion) :
+                messagebox.showinfo('Info.', 'Current Version : ' + VERSION + '\n' + 'Server Version (Test Channel) : ' + serverversion + '\n' + 'Latest Version.')
+            else :
+                messagebox.showinfo('Info.', 'Current Version : ' + VERSION + '\n' + 'Server Version (Test Channel) : ' + serverversion + '\n' + 'Needed Update or Version Error. Please Check Your Version.')                
+            scenenum = 11
         else :
             error(0, 'UnexpectedAccesspoint\nPlease Contact Developer : kevin587121@gmail.com')
             crashed = True
@@ -1127,10 +1182,30 @@ def Gameintro(): # Game Intro
         gamepad.blit(TextSurf, TextRect)
 
         pygame.display.update()
-        pygame.time.delay(2000)
+        for x in range(0,100,1) :
+            DrawBar((1100,700),(200,20), BLACK, (0,128,0), x/100, '', WHITE)
+            pygame.time.delay(10)
+            #print(x)
+            pygame.display.flip()
+            clock.tick(desiredfps)
         lastscene = 0
         scenenum = 2
         return
+def songupdate() :
+    try :
+        os.remove('Songs/songversion_server.txt')
+    except :
+        pass
+    download_small('https://raw.githubusercontent.com/kevin5871/RGX-4.0-Python/test1/Songs/songversion.txt','Songs/songversion_server.txt')
+    f = open('Songs/songversion.txt', 'r')
+    f2 = open('Songs/songversion_server.txt', 'r')
+    songversion = f.readline()
+    serverversion = f2.readline()
+    if(songversion < serverversion) :
+        messagebox.showinfo('Info.', 'Current Version : ' + songversion + '\n' + 'Server Version (Test Channel) : ' + serverversion + '\n' + 'Need Update before playing. Please Wait') 
+    else :
+        pass
+
 def search(dir) :
     global musiclist
     musiclist = list()
@@ -1141,5 +1216,6 @@ if __name__ == "__main__" :
     initGame() # Init
     search('Songs')
     MUSIC_MAXNUM = len(musiclist)
+    songupdate()
     Gameintro() # Intro Page
     runGame() # Game Start
