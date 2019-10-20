@@ -204,7 +204,7 @@ def note2_control() :
            if(max_combo < combo) :
                max_combo = combo
            combo = 0
-           appear_image('img/noteimage_miss2.png', gamepad, None, 215, 700, 255, 1)
+           appear_image('img/noteimage_miss2.png', gamepad, None, 430, 700, 255, 1)
         #del note2list[len(note2list) - 1]
 def note3_control() :
     global note3list, speed, combo, max_combo, grade, fps
@@ -219,7 +219,7 @@ def note3_control() :
             if(max_combo < combo) :
                 max_combo = combo
             combo = 0
-            appear_image('img/noteimage_miss2.png', gamepad, None, 215, 700, 255, 1)
+            appear_image('img/noteimage_miss2.png', gamepad, None, 640, 700, 255, 1)
                 #break
         #del note3list[len(note3list) - 1]
 def note4_control() :
@@ -235,7 +235,7 @@ def note4_control() :
              if(max_combo < combo) :
                  max_combo = combo
              combo = 0
-             appear_image('img/noteimage_miss2.png', gamepad, None, 215, 700, 255, 1)
+             appear_image('img/noteimage_miss2.png', gamepad, None, 855, 700, 255, 1)
                 #break
         #del note4list[len(note4list) - 1]
 
