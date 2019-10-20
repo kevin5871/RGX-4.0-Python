@@ -2,7 +2,7 @@
                                                     ##############################
                                                     # RGX 4.0 Main Engine Script #
                                                     # Written by Python          #
-                                                    # Engine Ver : v1.41b        #
+                                                    # Engine Ver : v1.42b        #
                                                     # Version date : 2019.10.20  #
                                                     # Made by kevin5871(sfcatz)  #
                                                     # Thanks to : Kokosei J      #
@@ -38,7 +38,7 @@ RED = (255,0,0)
 GREEN = (0,255,0)
 pad_width = 1280
 pad_height = 720
-VERSION = '1.4b'
+VERSION = '1.42b'
 fps = 60
 desiredfps = 60
 '''
@@ -1244,7 +1244,7 @@ if __name__ == "__main__" :
         pass
     initGame() # Init
     search('Songs')
-    MUSIC_MAXNUM = len(musiclist)
     songupdate()
+    MUSIC_MAXNUM = len(musiclist)
     Gameintro() # Intro Page
     runGame() # Game Start
