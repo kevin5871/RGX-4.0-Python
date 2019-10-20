@@ -2,8 +2,8 @@
                                                     ##############################
                                                     # RGX 4.0 Main Engine Script #
                                                     # Written by Python          #
-                                                    # Engine Ver : v1.4b         #
-                                                    # Version date : 2019.10.18  #
+                                                    # Engine Ver : v1.41b        #
+                                                    # Version date : 2019.10.20  #
                                                     # Made by kevin5871(sfcatz)  #
                                                     # Thanks to : Kokosei J      #
                                                     ############################## 
@@ -1238,6 +1238,10 @@ def search(dir) :
     print(musiclist)
 pygame.init()
 if __name__ == "__main__" :
+    try :
+        os.remove('SongData.zip')
+    except :
+        pass
     initGame() # Init
     search('Songs')
     MUSIC_MAXNUM = len(musiclist)
