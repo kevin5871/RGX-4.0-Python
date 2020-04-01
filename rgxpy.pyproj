@@ -26,15 +26,16 @@
   <ItemGroup>
     <Folder Include="img\" />
     <Folder Include="music\" />
+    <Folder Include="etc\" />
     <Folder Include="Songs\" />
     <Folder Include="note\" />
     <Folder Include="Songs\MyHeart\" />
-    <Folder Include="Songs\TestSong1\" />
     <Folder Include="Songs\NewTimeline\" />
     <Folder Include="Songs\SkyHigh\" />
     <Folder Include="ttf\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="etc\serverversion.txt" />
     <Content Include="img\blackscreen.png" />
     <Content Include="img\resultpage1.png" />
     <Content Include="img\resultpage2.jpg" />
@@ -48,6 +49,8 @@
     <Content Include="img\noteimage_miss.png" />
     <Content Include="img\noteimage_perfect.png" />
     <Content Include="img\noteimage_perfect2.png" />
+    <Content Include="img\settingimage.jpg" />
+    <Content Include="SongData.zip" />
     <Content Include="Songs\MyHeart\background.jpg" />
     <Content Include="Songs\MyHeart\select.png" />
     <Content Include="img\leftarrow.png" />
@@ -78,13 +81,9 @@
     <Content Include="Songs\SkyHigh\keynote.txt" />
     <Content Include="Songs\SkyHigh\info.txt" />
     <Content Include="Songs\SkyHigh\timenote.txt" />
-    <Content Include="Songs\TestSong1\background.png" />
-    <Content Include="Songs\TestSong1\select.png" />
-    <Content Include="Songs\TestSong1\select.mp3" />
-    <Content Include="Songs\TestSong1\song.mp3" />
-    <Content Include="Songs\TestSong1\keynote.txt" />
-    <Content Include="Songs\TestSong1\info.txt" />
-    <Content Include="Songs\TestSong1\timenote.txt" />
+    <Content Include="Songs\songversion_server.txt" />
+    <Content Include="Songs\songversion.txt" />
+    <Content Include="version.txt" />
     <Content Include="ttf\AmazOOSTROVv.2.ttf" />
     <Content Include="ttf\Bittypix-Countdown.ttf" />
     <Content Include="ttf\Enchanted-Land.ttf" />

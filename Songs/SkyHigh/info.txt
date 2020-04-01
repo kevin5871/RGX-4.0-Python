@@ -1,5 +1,5 @@
 Sky High
 Elektronomia (NCS)
-4
+5
 hard
-1700
+700
