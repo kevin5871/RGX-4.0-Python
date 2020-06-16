@@ -2,8 +2,8 @@
                                                     ##############################
                                                     # RGX 4.0 Main Engine Script #
                                                     # Written by Python          #
-                                                    # Engine Ver : v1.42b        #
-                                                    # Version date : 2019.10.20  #
+                                                    # Engine Ver : v1.43b        #
+                                                    # Version date : 2020.06.16  #
                                                     # Made by kevin5871(sfcatz)  #
                                                     # Thanks to : Kokosei J      #
                                                     ############################## 
@@ -13,7 +13,6 @@
 
 
                                                     ## Code Starts From Here ##
-
 # import part
 import pygame
 from pygame.locals import *
