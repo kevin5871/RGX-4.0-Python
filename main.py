@@ -1201,7 +1201,7 @@ def songupdate() :
         os.remove('Songs/songversion_server.txt')
     except :
         pass
-    download_small('https://raw.githubusercontent.com/kevin5871/RGX-4.0-Python/test1/Songs/songversion_server.txt','Songs/songversion_server.txt')
+    download_small('https://raw.githubusercontent.com/kevin5871/RGX-4.0-Python/master/Songs/songversion_server.txt','Songs/songversion_server.txt')
     f = open('Songs/songversion.txt', 'r')
     f2 = open('Songs/songversion_server.txt', 'r')
     songversion = f.readline()
@@ -1211,7 +1211,7 @@ def songupdate() :
     if(songversion < serverversion) :
         gamepad.fill(BLACK)
         messagebox.showinfo('Info.', 'Current Version : ' + songversion + '\n' + 'Server Version (Test Channel) : ' + serverversion + '\n' + 'Need Update before playing. Please Wait')
-        download_big('https://github.com/kevin5871/RGX-4.0-Python/blob/test1/SongData.zip?raw=true', 'SongDataDownloaded.zip', 1, (450,350),(400, 20),WHITE, WHITE)
+        download_big('https://github.com/kevin5871/RGX-4.0-Python/blob/master/SongData.zip?raw=true', 'SongDataDownloaded.zip', 1, (450,350),(400, 20),WHITE, WHITE)
         zip = zipfile.ZipFile('SongDataDownloaded.zip')
         zip.extractall('Songs')
         zip.close()
