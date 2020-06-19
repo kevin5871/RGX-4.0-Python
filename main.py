@@ -1,18 +1,18 @@
 
-                                                    ##############################
-                                                    # RGX 4.0 Main Engine Script #
-                                                    # Written by Python          #
-                                                    # Engine Ver : v1.43b        #
-                                                    # Version date : 2020.06.16  #
-                                                    # Made by kevin5871(sfcatz)  #
-                                                    # Thanks to : Kokosei J      #
-                                                    ############################## 
+                                                        ##############################
+                                                        # RGX 4.0 Main Engine Script #
+                                                        # Written by Python          #
+                                                        # Engine Ver : v1.5b         #
+                                                        # Version date : 2020.06.19  #
+                                                        # Made by kevin5871(sfcatz)  #
+                                                        # Thanks to : Kokosei J      #
+                                                        ############################## 
 
 
 
 
 
-                                                    ## Code Starts From Here ##
+                                                        ## Code Starts From Here ##
 # import part
 import pygame
 from pygame.locals import *
@@ -478,7 +478,7 @@ def set() :
 
 
 def startengine() :
-    global fps, timer, keylist, timelist, crashed, background, note1list, note2list, note3list, note4list, speed, trigger, trigger2, score, grade, combo, max_combo, max_score
+    global fps, timer, keylist, timelist, crashed, background, note1list, note2list, note3list, note4list, speed, trigger, trigger2, score, grade, combo, max_combo, max_score, rhythmkey
     note1list, note2list, note3list, note4list = list(), list(), list(), list()
     clock = pygame.time.Clock()
     grade = [0,0,0,0]
@@ -499,13 +499,13 @@ def startengine() :
                     crashed = True
                     return
                 if event.type == pygame.KEYDOWN :
-                    if event.key == pygame.K_d :
+                    if event.key == rhythmkey[0] :
                         note1clicked()
-                    elif event.key == pygame.K_f :
+                    elif event.key == rhythmkey[1] :
                         note2clicked()
-                    elif event.key == pygame.K_j :
+                    elif event.key == rhythmkey[2] :
                         note3clicked()
-                    elif event.key == pygame.K_k :
+                    elif event.key == rhythmkey[3] :
                         note4clicked()
                     else :
                         pass
@@ -709,11 +709,21 @@ def gamebackground2() :
     appear_image('img/notepagenew2.png', gamepad, None, 0, 0, 150, 2)
 
 
+def s15key() :
+    global buttons
+    while not crashed :
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN :
+                pressed = pygame.key.get_pressed()
+                buttons = [k for k,v in enumerate(pressed) if v]
+                return
+
 def runGame(): # Main Script
-    global gamepad, clock, scenenum, background, lastscene, musicnum, imgnum, crashed, keylist, timelist, trigger, musiclist, grade, percent, max_combo, volume, speed, MUSIC_MAXNUM, done
+    global gamepad, clock, scenenum, background, lastscene, musicnum, imgnum, crashed, keylist, timelist, trigger, musiclist, grade, percent, max_combo, volume, speed, MUSIC_MAXNUM, done, buttons, rhythmkey
     crashed = False
     volume = 100
     speed = 1
+    rhythmkey = [pygame.K_d, pygame.K_f, pygame.K_j, pygame.K_l]
     #scenenum = 8
     while not crashed:
         for event in pygame.event.get():
@@ -1117,8 +1127,17 @@ def runGame(): # Main Script
             pygame.display.flip()
             clock.tick(desiredfps)
         elif(scenenum == 15) :
-            messagebox.showinfo('Info.', 'Preparing.')
-            scenenum = 12
+            #messagebox.showinfo('Info.', 'Preparing.')
+            for y in range(0,4,1):
+                gamepad.fill(BLACK)
+                pygame.time.delay(100)
+                text('Enter the key you will use in line ' + str(y+1), 'ttf/KaiGenGothicKR-Regular.ttf', 60, WHITE, 600, 300)
+                pygame.display.flip()
+                clock.tick(desiredfps)
+                s15key()
+                rhythmkey[y] = buttons[0]
+            print(rhythmkey)
+            scenenum = 11
         elif(scenenum == 16) :
             messagebox.showwarning('Warning.', 'This game will go back to select page after refreshing.')
             search('Songs')
@@ -1132,13 +1151,13 @@ def runGame(): # Main Script
                 os.remove('etc/serverversion.txt')
             except :
                 pass
-            download_small('https://raw.githubusercontent.com/kevin5871/RGX-4.0-Python/test1/version.txt','etc/serverversion.txt')
+            download_small('https://raw.githubusercontent.com/kevin5871/RGX-4.0-Python/master/version.txt','etc/serverversion.txt')
             f = open('etc/serverversion.txt', 'r')
             serverversion = f.readline()
             if(VERSION == serverversion) :
-                messagebox.showinfo('Info.', 'Current Version : ' + VERSION + '\n' + 'Server Version (Test Channel) : ' + serverversion + '\n' + 'Latest Version.')
+                messagebox.showinfo('Info.', 'Current Version : ' + VERSION + '\n' + 'Server Version : ' + serverversion + '\n' + 'Latest Version.')
             else :
-                messagebox.showinfo('Info.', 'Current Version : ' + VERSION + '\n' + 'Server Version (Test Channel) : ' + serverversion + '\n' + 'Needed Update or Version Error. Please Check Your Version.')                
+                messagebox.showinfo('Info.', 'Current Version : ' + VERSION + '\n' + 'Server Version : ' + serverversion + '\n' + 'Needed Update or Version Error. Please Check Your Version.')                
             scenenum = 11
         else :
             error(0, 'UnexpectedAccesspoint\nPlease Contact Developer : kevin587121@gmail.com')
