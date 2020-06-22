@@ -2,8 +2,8 @@
                                                         ##############################
                                                         # RGX 4.0 Main Engine Script #
                                                         # Written by Python          #
-                                                        # Engine Ver : v1.5b         #
-                                                        # Version date : 2020.06.19  #
+                                                        # Engine Ver : v1.6b         #
+                                                        # Version date : 2020.06.22  #
                                                         # Made by kevin5871(sfcatz)  #
                                                         # Thanks to : Kokosei J      #
                                                         ############################## 
@@ -37,7 +37,7 @@ RED = (255,0,0)
 GREEN = (0,255,0)
 pad_width = 1280
 pad_height = 720
-VERSION = '1.5b'
+VERSION = '1.6b'
 fps = 60
 desiredfps = 60
 '''
@@ -1156,9 +1156,19 @@ def runGame(): # Main Script
             serverversion = f.readline()
             if(VERSION == serverversion) :
                 messagebox.showinfo('Info.', 'Current Version : ' + VERSION + '\n' + 'Server Version : ' + serverversion + '\n' + 'Latest Version.')
+                scenenum = 11
             else :
-                messagebox.showinfo('Info.', 'Current Version : ' + VERSION + '\n' + 'Server Version : ' + serverversion + '\n' + 'Needed Update or Version Error. Please Check Your Version.')                
-            scenenum = 11
+                messagebox.showinfo('Info.', 'Current Version : ' + VERSION + '\n' + 'Server Version : ' + serverversion + '\n' + 'Needed Update or Version Error. Please Check Your Version.')
+                res = messagebox.askquestion('Update Manager', 'Initiate Update?', icon='info')
+                if res == 'yes' :
+                    gamepad.fill(BLACK)
+                    pygame.display.flip()
+                    download_big('https://github.com/kevin5871/RGX-4.0-Python/archive/master.zip', 'update/updatefile.zip',  1, (450,350),(400,20),WHITE, WHITE)
+                    messagebox.showinfo('Info.', 'Game will be closed and after the update the game will be restarted.')
+                    os.system("update.py")
+                    return
+                else :
+                    scenenum = 11
         else :
             error(0, 'UnexpectedAccesspoint\nPlease Contact Developer : kevin587121@gmail.com')
             crashed = True
@@ -1228,7 +1238,7 @@ def songupdate() :
     print(songversion)
     if(songversion < serverversion) :
         gamepad.fill(BLACK)
-        messagebox.showinfo('Info.', 'Current Version : ' + songversion + '\n' + 'Server Version (Test Channel) : ' + serverversion + '\n' + 'Need Update before playing. Please Wait')
+        messagebox.showinfo('Info.', 'Current Song Version : ' + songversion + '\n' + 'Server Song Version : ' + serverversion + '\n' + 'Need Update before playing. Please Wait')
         download_big('https://github.com/kevin5871/RGX-4.0-Python/blob/master/SongData.zip?raw=true', 'SongDataDownloaded.zip', 1, (450,350),(400, 20),WHITE, WHITE)
         zip = zipfile.ZipFile('SongDataDownloaded.zip')
         zip.extractall('Songs')
@@ -1245,6 +1255,14 @@ def songupdate() :
     else :
         pass
 
+def update() :
+    download_small('https://raw.githubusercontent.com/kevin5871/RGX-4.0-Python/master/version.txt', 'etc/serverversion.txt')
+    f=open('etc/serverversion.txt', 'r')
+    ve = f.readline()
+    if not VERSION == ve :
+        messagebox.showinfo('Info.', 'Current Version : ' + VERSION + '\n' + 'Server Version (Test Channel) : ' + ve + '\n' + 'Maybe update is required. Go to settings > Check Updates for update.')
+        f.close()
+
 def search(dir) :
     global musiclist
     musiclist = list()
@@ -1256,13 +1274,20 @@ def search(dir) :
     print(musiclist)
 pygame.init()
 if __name__ == "__main__" :
-    try :
-        os.remove('SongData.zip')
-    except :
-        pass
     initGame() # Init
+    update()
     search('Songs')
-    songupdate()
+
+    f=open('etc/usr.txt')
+    ad = f.readline()
+    if ad == '1':
+        VERSION = '0'
+    else :
+        try :
+            os.remove('SongData.zip')
+        except :
+            pass
+        songupdate()
     MUSIC_MAXNUM = len(musiclist)
     Gameintro() # Intro Page
     runGame() # Game Start
